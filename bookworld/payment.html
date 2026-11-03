@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment | BookWorld</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap nav-in">
+      <a class="logo" href="index.html">Book<span>World</span></a>
+      <nav aria-label="Main">
+        <a href="index.html">Home</a>
+        <a href="books.html">Books</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap section">
+      <div id="checkoutView">
+        <h1 class="page-title">Payment</h1>
+        <form id="payForm" class="two pay">
+          <div>
+            <div class="panel">
+              <h2>Contact and delivery</h2>
+              <label for="name">Full name</label>
+              <input id="name" required autocomplete="name">
+              <label for="email">Email</label>
+              <input id="email" type="email" required autocomplete="email">
+              <label for="phone">Mobile number</label>
+              <input id="phone" inputmode="numeric" data-digits pattern="[0-9]{10}" maxlength="10" title="Enter 10 digits" required autocomplete="tel">
+              <label for="address">Street address</label>
+              <textarea id="address" required autocomplete="street-address"></textarea>
+              <div class="split">
+                <div><label for="city">City</label><input id="city" required autocomplete="address-level2"></div>
+                <div><label for="pin">PIN code</label><input id="pin" inputmode="numeric" data-digits pattern="[0-9]{6}" maxlength="6" title="Enter 6 digits" required autocomplete="postal-code"></div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <h2>Payment method</h2>
+              <fieldset class="seg">
+                <legend class="sr">Choose a payment method</legend>
+                <input type="radio" name="method" id="m-qr" value="qr" checked><label for="m-qr">UPI QR</label>
+                <input type="radio" name="method" id="m-card" value="card"><label for="m-card">Card</label>
+                <input type="radio" name="method" id="m-cod" value="cod"><label for="m-cod">Cash on delivery</label>
+              </fieldset>
+
+              <div class="method-panel" id="pay-qr">
+                <div class="qr-box">
+                  <img class="qr" src="images/payment-qr.png" width="600" height="600" alt="UPI QR code. Scan it with any UPI app to pay BookWorld.">
+                  <div class="qr-info">
+                    <p class="muted">Amount to pay</p>
+                    <p class="qr-amount" id="qrAmount"></p>
+                    <p class="muted">Pay to <strong id="payeeName"></strong></p>
+                    <p class="muted">UPI ID: <strong id="payeeUpi"></strong></p>
+                    <a class="btn small" id="upiLink" href="#" hidden>Open UPI app</a>
+                  </div>
+                </div>
+                <ol class="steps">
+                  <li>Scan the QR code with any UPI app.</li>
+                  <li>Enter the amount shown above and pay.</li>
+                  <li>Type the 12-digit UPI transaction ID below, then place your order.</li>
+                </ol>
+                <label for="txnId">UPI transaction ID (12 digits)</label>
+                <input id="txnId" inputmode="numeric" data-digits maxlength="12" pattern="[0-9]{12}" title="Enter the 12-digit transaction ID from your UPI app" placeholder="123456789012" autocomplete="off">
+              </div>
+
+              <div class="method-panel" id="pay-card" hidden>
+                <label for="cardNumber">Card number</label>
+                <input id="cardNumber" inputmode="numeric" placeholder="1234 5678 9012 3456" pattern="[0-9 ]{19}" title="Enter 16 digits" autocomplete="cc-number">
+                <div class="split">
+                  <div><label for="exp">Expiry (MM/YY)</label><input id="exp" placeholder="08/29" pattern="(0[1-9]|1[0-2])\/[0-9]{2}" autocomplete="cc-exp"></div>
+                  <div><label for="cvv">CVV</label><input id="cvv" type="password" inputmode="numeric" data-digits maxlength="3" pattern="[0-9]{3}" autocomplete="cc-csc"></div>
+                </div>
+                <p class="muted note">Demo card form. No real payment is taken and card details are never saved.</p>
+              </div>
+              <div class="method-panel" id="pay-cod" hidden>
+                <p class="muted">Pay in cash when your order arrives.</p>
+              </div>
+            </div>
+          </div>
+
+          <aside class="panel summary">
+            <h2>Order summary</h2>
+            <div id="summaryItems"></div>
+            <div class="sum-row"><span>Subtotal</span><span id="subtotal"></span></div>
+            <div class="sum-row"><span>Shipping</span><span id="shipping"></span></div>
+            <div class="sum-row total"><span>Total</span><span id="grandTotal"></span></div>
+            <button class="btn full" type="submit">Place order</button>
+          </aside>
+        </form>
+      </div>
+
+      <div id="emptyView" class="panel center" hidden>
+        <h1>Your cart is empty</h1>
+        <p class="muted">Add a book before going to payment.</p>
+        <a class="btn" href="books.html">Browse books</a>
+      </div>
+
+      <div id="doneView" class="panel center" hidden>
+        <h1>Order placed</h1>
+        <p>Thank you, <strong id="doneName"></strong>. Your total is <strong id="doneTotal"></strong>.</p>
+        <p class="muted" id="doneNote"></p>
+        <p class="muted">Order ID: <span id="orderId"></span></p>
+        <a class="btn" href="books.html">Continue shopping</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap foot">
+      <div><strong>BookWorld</strong><p class="muted">Email: <a href="mailto:support@bookworld.com">support@bookworld.com</a></p></div>
+      <p class="muted">© 2026 BookWorld. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <div id="toast" class="toast" role="status"></div>
+
+  <script src="common.js"></script>
+  <script src="payment.js"></script>
+</body>
+</html>
